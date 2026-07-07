@@ -1,11 +1,14 @@
-local Rayfield = loadstring(game:HttpGet('https://githubusercontent.com'))()
+local Fluent = loadstring(game:HttpGet("https://github.com"))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "My Custom Script 🚀 (Pet Sim 99)",
-   LoadingTitle = "Loading...",
-   LoadingSubtitle = "Custom Script",
-   ConfigurationSaving = { Enabled = false }
- })
+local Window = Fluent:CreateWindow({
+    Title = "My Custom Script 🚀 (Pet Sim 99)",
+    SubTitle = "Special for Delta X",
+    TabWidth = 160,
+    Size = Vector2.new(580, 460),
+    Acrylic = false,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
 
 local VirtualUser = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
@@ -13,7 +16,9 @@ game:GetService("Players").LocalPlayer.Idled:Connect(function()
     VirtualUser:ClickButton2(Vector2.new(0,0))
 end)
 
-local FarmTab = Window:CreateTab("Auto Farm & Rank", 4483362458)
+local Tabs = {
+    Main = Window:AddTab({ Title = "Auto Farm & Rank", Icon = "home" })
+}
 
 _G.AutoFarm = false
 _G.AutoRank = false
@@ -55,18 +60,14 @@ task.spawn(function()
     end
 end)
 
-FarmTab:CreateToggle({
-   Name = "Auto Claim Rank",
-   CurrentValue = false,
-   Callback = function(Value)
-      _G.AutoRank = Value
-   end,
-})
+local Toggle1 = Tabs.Main:AddToggle("AutoRank", {Title = "Auto Claim Rank", Default = false})
+Toggle1:OnChanged(function(Value)
+    _G.AutoRank = Value
+end)
 
-FarmTab:CreateToggle({
-   Name = "Auto Farm",
-   CurrentValue = false,
-   Callback = function(Value)
-      _G.AutoFarm = Value
-   end,
-})
+local Toggle2 = Tabs.Main:AddToggle("AutoFarm", {Title = "Auto Farm", Default = false})
+Toggle2:OnChanged(function(Value)
+    _G.AutoFarm = Value
+end)
+
+Window:SelectTab(1)
